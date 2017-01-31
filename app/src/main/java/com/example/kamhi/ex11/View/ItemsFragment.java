@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.kamhi.ex11.Controller.CountryAdapter;
 import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.Model.DataLoader;
 import com.example.kamhi.ex11.R;
@@ -24,7 +25,7 @@ import java.util.Comparator;
 
 public class ItemsFragment extends ListFragment{
 
-    ArrayAdapter<Country> adapter;
+    CountryAdapter adapter;
     Context context;
     CountryselectList listener;
 
@@ -33,8 +34,8 @@ public class ItemsFragment extends ListFragment{
         this.context = getActivity();
         try {
             this.listener = (CountryselectList) getActivity();
-            this.adapter = new ArrayAdapter<Country>(context, android.R.layout.simple_list_item_1, DataLoader.getCountries());
-            this.adapter.sort(new Comparator<Country>() {
+            this.adapter = new CountryAdapter(context);
+            this.adapter.sort( new Comparator<Country>() {
                 @Override
                 public int compare(Country c1, Country c2) {
                     return c1.compare(c2);
