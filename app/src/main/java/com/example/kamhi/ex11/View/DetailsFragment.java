@@ -27,9 +27,12 @@ public class DetailsFragment extends Fragment {
         this.context = getActivity();
         try {
             this.listener = (CountryReporter) getActivity();
+            Country country = listener.getCountryData();
+            if(country!=null)
+                changeTo(country);
         }
         catch (ClassCastException e){
-            throw new ClassCastException("The class " + getActivity().getClass().getName() + " must implements the interfase 'DataReporter");
+            throw new ClassCastException("The class " + getActivity().getClass().getName() + " must implements the interface 'CountryReporter");
         }
         super.onActivityCreated(savedInstanceState);
     }
@@ -47,7 +50,7 @@ public class DetailsFragment extends Fragment {
     }
 
     public void changeTo(Country newCountry){
-        this.tVDetails.setText(newCountry.toString());
+        this.tVDetails.setText(newCountry.getDetails());
     }
 
     public static interface CountryReporter{

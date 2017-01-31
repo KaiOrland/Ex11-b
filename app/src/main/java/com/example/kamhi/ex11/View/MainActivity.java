@@ -43,6 +43,8 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
 
     @Override
     public void onCountryChange(int position, Country country) {
+        this.position = position;
+        this.country = country;
         DetailsFragment detailsFrag;
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             detailsFrag = (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsFragment);
