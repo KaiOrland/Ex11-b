@@ -5,6 +5,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.R;
@@ -19,6 +23,9 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
         super.onSaveInstanceState(outState);
         outState.putInt("position", position);
     }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,16 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.fragContainer, new ItemsFragment(), "AAA").commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -81,4 +98,6 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
     public Country getCountryData() {
         return this.country;
     }
+
+
 }

@@ -13,6 +13,8 @@ import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.Model.DataLoader;
 import com.example.kamhi.ex11.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by Madaim on 31/01/2017.
  */
@@ -20,11 +22,13 @@ import com.example.kamhi.ex11.R;
 
 public class CountryAdapter extends ArrayAdapter<Country> {
 
+    ArrayList<Country> allCountries;
     private Context context;
     public CountryAdapter(Context context) {
         super(context, R.layout.world_explorer);
         this.context = context;
-        this.addAll(DataLoader.getCountries());
+        this.allCountries = DataLoader.getCountries();
+        this.addAll(allCountries);
     }
 
     @NonNull
@@ -46,6 +50,14 @@ public class CountryAdapter extends ArrayAdapter<Country> {
         return convertView;
     }
 
-
+public ArrayList<String> getMissingCountries(ArrayList<Country> countries){
+    ArrayList<String> result = new ArrayList<>();
+    for (Country cn: allCountries){
+        if(!countries.contains(cn.getName())){
+            result.add(cn.getName());
+        }
+    }
+    return result;
+}
 
 }

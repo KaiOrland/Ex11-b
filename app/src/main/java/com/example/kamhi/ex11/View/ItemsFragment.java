@@ -6,7 +6,11 @@ import android.content.Context;
 import android.location.GpsStatus;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,17 +21,19 @@ import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.Model.DataLoader;
 import com.example.kamhi.ex11.R;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
  * Created by Kamhi on 3/1/2017.
  */
 
-public class ItemsFragment extends ListFragment{
+public class ItemsFragment extends ListFragment implements MyDialog.ResultsListener{
 
     CountryAdapter adapter;
     Context context;
     CountryselectList listener;
+    ArrayList<Country> shownCountries = new ArrayList<>();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class ItemsFragment extends ListFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.items_frag, container, false);
     }
 
@@ -68,11 +75,38 @@ public class ItemsFragment extends ListFragment{
         this.listener.onCountryChange(position, adapter.getItem(position));
     }
 
+    @Override
+    public void onFinishedDialog(int requestCode, Object results) {
+
+    }
 
 
     public interface CountryselectList{
         public void onCountryChange(int position, Country country);
         public int getCurrentSelection();
         public void setInitCountry(Country country);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.context, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_add:
+                MyDialog.newInstance(MyDialog.ADD_DIALOG).show(getChildFragmentManager(), null);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public ArrayList<String> getMissingCountries(){
+        return adapter.getMissingCountries(shownCountries);
     }
 }
