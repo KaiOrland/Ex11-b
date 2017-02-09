@@ -70,8 +70,10 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mp.stop();
-        mp.release();
+        if(mp!=null) {
+            mp.stop();
+            mp.release();
+        }
     }
     @Override
     public void onPause() {
